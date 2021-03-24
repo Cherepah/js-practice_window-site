@@ -34,7 +34,13 @@ body {
     transform: scale(1);
   }
 }
-
+.tab-show {
+  display: block !important;
+  animation: anim-modal 0.5s forwards;
+}
+.tab-hide {
+  display: none;
+}
 a:hover {
   text-decoration: none;
 }
