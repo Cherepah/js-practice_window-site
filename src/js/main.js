@@ -4,6 +4,7 @@ import tabs from "./modules/tabs";
 import forms from "./modules/forms";
 import timer from "./modules/timer";
 import changeModalState from "./modules/changeModalState";
+import images from "./modules/images";
 
 window.addEventListener('DOMContentLoaded', () => {
 
@@ -16,4 +17,5 @@ window.addEventListener('DOMContentLoaded', () => {
     tabs('.glazing_slider', '.balcon_icons_img', '.big_img > img', 'do_image_more', 'inline');
     forms(modalState);
     timer('#timer', '2022-03-31');
+    images();
 });
