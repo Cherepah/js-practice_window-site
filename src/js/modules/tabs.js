@@ -1,4 +1,4 @@
-const tabs = (tabHeaderSelector, tabSelector, tabContentSelector, tabActiveClass) => {
+const tabs = (tabHeaderSelector, tabSelector, tabContentSelector, tabActiveClass, display) => {
 
     const tabHeader = document.querySelector(tabHeaderSelector),
           tabs = document.querySelectorAll(tabSelector),
@@ -6,13 +6,21 @@ const tabs = (tabHeaderSelector, tabSelector, tabContentSelector, tabActiveClass
 
     function hideTab() {
         tabContents.forEach( (item) => {
-            item.classList.remove('tab-show');
-            item.classList.add('tab-hide');
+            if(display) {
+                item.style.display = 'none';
+            } else {
+                item.classList.remove('tab-show');
+                item.classList.add('tab-hide');
+            }
         });
     }
     function showTab(number = 0) {
-        tabContents[number].classList.remove('tab-hide');
-        tabContents[number].classList.add('tab-show');
+        if(display) {
+            tabContents[number].style.display = display;
+        } else {    
+            tabContents[number].classList.remove('tab-hide');
+            tabContents[number].classList.add('tab-show');
+        }
     }
     //target.parentNode - родитель элемента
     //tabContentSelector > div > div 
@@ -21,8 +29,10 @@ const tabs = (tabHeaderSelector, tabSelector, tabContentSelector, tabActiveClass
             hideTab();
             showTab(count);
             if(tabActiveClass) {
-                tab.classList.remove(tabActiveClass);
-                tab[count].classList.add(tabActiveClass);
+                tabs.forEach(item => {
+                    item.classList.remove(tabActiveClass);
+                });
+                tab.classList.add(tabActiveClass);
             }
         });
     });
