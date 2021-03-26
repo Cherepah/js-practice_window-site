@@ -3,7 +3,8 @@ const modals = () => {
         const modalTrigger = document.querySelectorAll(modalTriggerSelector),
           modalWindow = document.querySelector(modalWindowSelector),
           modalCloseBtn = document.querySelector(modalCloseBtnSelector),
-          windows = document.querySelectorAll('[data-modal]');
+          windows = document.querySelectorAll('[data-modal]'),
+          scroll = calcScroll();
 
         modalTrigger.forEach(trigger => {
             trigger.addEventListener('click', (e) => {
@@ -18,6 +19,7 @@ const modals = () => {
                 modalWindow.style.display = 'block';
                 modalWindow.classList.add('animation-modal');
                 document.body.style.overflow = 'hidden';
+                document.body.style.marginRight = `${scroll}px`;
             }); 
         });
                    
@@ -32,6 +34,7 @@ const modals = () => {
                 modalWindow.style.display = 'none';
                 modalWindow.classList.remove('animation-modal') ;
                 document.body.style.overflow = '';
+                document.body.style.marginRight = '0px';
                 // document.body.classList.remove('modal-open');
             }
         });
@@ -45,6 +48,7 @@ const modals = () => {
             modalWindow.style.display = 'none';
             modalWindow.classList.remove('animation-modal');
             document.body.style.overflow = '';
+            document.body.style.marginRight = '0px';
             // document.body.classList.remove('modal-open');
         });
     }
@@ -56,6 +60,21 @@ const modals = () => {
             modalWindow.style.display = 'block';
             document.body.style.overflow = 'hidden';
         }, time);
+    }
+
+    function calcScroll() {
+        let div = document.createElement('div');
+
+        div.style.width = '50px';
+        div.style.height = '50px';
+        div.style.overflowY = 'scroll';
+        div.style.visibility = 'hidden';
+
+        document.body.appendChild(div);
+        let scrollWidth = div.offsetWidth - div.clientWidth;
+        div.remove();
+
+        return scrollWidth;
     }
     
     bindModal('.popup_engineer_btn', '.popup_engineer', '.popup_engineer .popup_close');

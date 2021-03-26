@@ -18102,7 +18102,8 @@ var modals = function modals() {
     var modalTrigger = document.querySelectorAll(modalTriggerSelector),
         modalWindow = document.querySelector(modalWindowSelector),
         modalCloseBtn = document.querySelector(modalCloseBtnSelector),
-        windows = document.querySelectorAll('[data-modal]');
+        windows = document.querySelectorAll('[data-modal]'),
+        scroll = calcScroll();
     modalTrigger.forEach(function (trigger) {
       trigger.addEventListener('click', function (e) {
         if (e.target) {
@@ -18115,6 +18116,7 @@ var modals = function modals() {
         modalWindow.style.display = 'block';
         modalWindow.classList.add('animation-modal');
         document.body.style.overflow = 'hidden';
+        document.body.style.marginRight = "".concat(scroll, "px");
       });
     });
     modalWindow.addEventListener('click', function (e) {
@@ -18124,7 +18126,8 @@ var modals = function modals() {
         });
         modalWindow.style.display = 'none';
         modalWindow.classList.remove('animation-modal');
-        document.body.style.overflow = ''; // document.body.classList.remove('modal-open');
+        document.body.style.overflow = '';
+        document.body.style.marginRight = '0px'; // document.body.classList.remove('modal-open');
       }
     });
     modalCloseBtn.addEventListener('click', function () {
@@ -18133,7 +18136,8 @@ var modals = function modals() {
       });
       modalWindow.style.display = 'none';
       modalWindow.classList.remove('animation-modal');
-      document.body.style.overflow = ''; // document.body.classList.remove('modal-open');
+      document.body.style.overflow = '';
+      document.body.style.marginRight = '0px'; // document.body.classList.remove('modal-open');
     });
   }
 
@@ -18143,6 +18147,18 @@ var modals = function modals() {
       modalWindow.style.display = 'block';
       document.body.style.overflow = 'hidden';
     }, time);
+  }
+
+  function calcScroll() {
+    var div = document.createElement('div');
+    div.style.width = '50px';
+    div.style.height = '50px';
+    div.style.overflowY = 'scroll';
+    div.style.visibility = 'hidden';
+    document.body.appendChild(div);
+    var scrollWidth = div.offsetWidth - div.clientWidth;
+    div.remove();
+    return scrollWidth;
   }
 
   bindModal('.popup_engineer_btn', '.popup_engineer', '.popup_engineer .popup_close');
